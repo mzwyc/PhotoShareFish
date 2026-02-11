@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的相册</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-weight: 300;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .gallery {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+        
+        .photo-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        
+        .photo-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .photo-info {
+            padding: 15px;
+        }
+        
+        .photo-title {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .photo-date {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header, footer {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>我的相册</h1>
+        <p class="subtitle">记录美好瞬间，分享精彩故事</p>
+    </header>
+    
+    <section class="gallery">
+        <div class="photo-grid">
+            <!-- 照片卡片将在这里动态生成 -->
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2026 我的相册 | 保留所有权利</p>
+    </footer>
+
+    <script>
+        // 照片数据
+        const photos = [
+            { title: "海边日落", date: "2025-07-15", url: "https://yq01-cm01.baidupcs.com/file/be5a228adpa09b28eff954a11b481897?bkt=en-306f50e23c1196a5a565bbd7e5a592d9551c6159832e9a280eaf40083f247855f0d5a33aea6c2b512e87953ffe0230aa7111e7f374b42df5062e089afdaff83c&fid=1102675022498-16051585-472913190652570&time=1770797006&sign=FDTAXUbGERQlBHSKfWqij-DCb740ccc5511e5e8fedcff06b081203-TuxDf09MiuiWKRS6Ik1hIwtCpAc%3D&to=435&size=2639142&sta_dx=2639142&sta_cs=0&sta_ft=jpg&sta_ct=3&sta_mt=3&fm2=MH%2CYangquan%2CAnywhere%2C%2C北京%2Ccmnet&ctime=1770117073&mtime=1770117073&dt3=0&resv0=-1&resv1=0&resv2=rlim&resv3=5&resv4=2639142&vuk=1102675022498&iv=0&vl=1&htype=&randtype=&tkbind_id=0&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=en-0ca6e792579b5e6901c414ea10e69ee9150d25d1f0410471e10a7c3e423dc99306b7ecc41242ff64e1b012efa77ba7b80287c5b85c10a5ec305a5e1275657320&expires=8h&rt=pr&r=721170722&mlogid=966423165372987865&vbdid=-&fin=IMG_20260202_214335.jpg&err_ver=1.0&rtype=1&clienttype=70&dp-logid=966423165372987865&dp-callid=0.1.1&hps=1&tsl=0&csl=0&fsl=-1&csign=RgkF9jKzPXIEdFKlGXBeQlT3BQI%3D&so=0&ut=6&uter=4&serv=0&uc=4010811801&ti=fb6dd0596e887f343cc44f4b1ff86e1df98c52865fd65d8a305a5e1275657320&hflag=30&from_type=1&adg=n&reqlabel=16051585_d_bed36cfb3557fa26285bfe5d7f2c7d01_-1_062486fedb7471d443eb374b2bf11e9f&bid=themisyike&fpath=_pcs_.appdata%2Fyoua%2Falbum&by=themis" },
+            { title: "山间晨雾", date: "2025-08-20", url: "https://bddwd-cm01.baidupcs.com/file/75752a8a0qaea99e4e5b63a4018aee71?bkt=en-1d4f88d1767dc1372b499ea32f768b6700bc810f97b39e77e8e93bfe81bad1cd04a229f9dafed4799265eada58d69c235d870cd89bebdf2eaf76e710ac172f53&fid=1102675022498-16051585-263934112666295&time=1770796960&sign=FDTAXUbGERQlBHSKfWqij-DCb740ccc5511e5e8fedcff06b081203-bwZl%2FSgOx0XxFeEyFUU%2FBVbl0wY%3D&to=445&size=2444867&sta_dx=2444867&sta_cs=0&sta_ft=jpg&sta_ct=3&sta_mt=3&fm2=MH%2CBaoding%2CAnywhere%2C%2C北京%2Ccmnet&ctime=1770117072&mtime=1770117072&dt3=0&resv0=-1&resv1=0&resv2=rlim&resv3=5&resv4=2444867&vuk=1102675022498&iv=0&vl=1&htype=&randtype=&tkbind_id=0&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=en-ea803328d3e99552827e2ab2b68c6cc5105199548c2174cd67304301d06d57c7a3b098972acc47f364ee9aa7fc1e093fd209daa23cf9a06d305a5e1275657320&expires=8h&rt=pr&r=311135462&mlogid=966410683987391849&vbdid=-&fin=IMG_20260202_214321.jpg&err_ver=1.0&rtype=1&clienttype=70&dp-logid=966410683987391849&dp-callid=0.1.1&hps=1&tsl=0&csl=0&fsl=-1&csign=RgkF9jKzPXIEdFKlGXBeQlT3BQI%3D&so=0&ut=6&uter=4&serv=0&uc=4010811801&ti=fb6dd0596e887f34a2aea1f2cec7e5eb2ab7e8cbe4fe2e1636d137a8fa615318&hflag=30&from_type=1&adg=n&reqlabel=16051585_d_bed36cfb3557fa26285bfe5d7f2c7d01_-1_062486fedb7471d443eb374b2bf11e9f&bid=themisyike&fpath=_pcs_.appdata%2Fyoua%2Falbum&by=themis" },
+            { title: "城市夜景", date: "2025-09-05", url: "https://yq01-cm01.baidupcs.com/file/b048f1e6cjf45d3a22af79c0cd8a786a?bkt=en-0f64e6ca9b24f0bcc0b61c840f06dc855c12713326d56c1a99c6361887db35d2d41bee382de10b05d425a04068327e415d1bc0aa76f583c6fe7ee27a2b62ecb2&fid=1102675022498-16051585-285437703528944&time=1770797062&sign=FDTAXUbGERQlBHSKfWqij-DCb740ccc5511e5e8fedcff06b081203-YgcJSX3dR9liy1HR%2BxFHeXlEkRE%3D&to=435&size=2132251&sta_dx=2132251&sta_cs=0&sta_ft=jpg&sta_ct=3&sta_mt=3&fm2=MH%2CYangquan%2CAnywhere%2C%2C北京%2Ccmnet&ctime=1770117088&mtime=1770117088&dt3=0&resv0=-1&resv1=0&resv2=rlim&resv3=5&resv4=2132251&vuk=1102675022498&iv=0&vl=1&htype=&randtype=&tkbind_id=0&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=en-de01833603f983dfc78c49c21a7ebbf8409e93e216d504773ed406b10f608d5ef3cc8a80446b8feff8334f04d5c7031ecfa6ba25a4a44802305a5e1275657320&expires=8h&rt=pr&r=874885284&mlogid=966438184329995848&vbdid=-&fin=IMG_20260202_214121.jpg&err_ver=1.0&rtype=1&clienttype=70&dp-logid=966438184329995848&dp-callid=0.1.1&hps=1&tsl=0&csl=0&fsl=-1&csign=RgkF9jKzPXIEdFKlGXBeQlT3BQI%3D&so=0&ut=6&uter=4&serv=0&uc=4010811801&ti=94b3c8d7853df21f7e86c59b318d9de48d5251ac8ffda12d&hflag=30&from_type=1&adg=n&reqlabel=16051585_d_bed36cfb3557fa26285bfe5d7f2c7d01_-1_062486fedb7471d443eb374b2bf11e9f&bid=themisyike&fpath=_pcs_.appdata%2Fyoua%2Falbum&by=themis" },
+            { title: "森林小径", date: "2025-10-12", url: "https://xafj-cm11.baidupcs.com/file/900383ef5o1eb1381999df15a73bc264?bkt=en-6766f9da69592c1289c046b344e75e419e6974a93ed8164b717e2a034f9f651282c513ef43d21c1ad2539a72c1c6b96c57f6c5a2ef254ddf093c31624e9348e2&fid=1102675022498-16051585-191270021684732&time=1770797129&sign=FDTAXUbGERQlBHSKfWqij-DCb740ccc5511e5e8fedcff06b081203-uZ1bWntJ0q4JaWG7xdxelUIJzCw%3D&to=415&size=3324592&sta_dx=3324592&sta_cs=0&sta_ft=jpg&sta_ct=3&sta_mt=3&fm2=MH%2CXian%2CAnywhere%2C%2C北京%2Ccmnet&ctime=1770117095&mtime=1770117095&dt3=0&resv0=-1&resv1=0&resv2=rlim&resv3=5&resv4=3324592&vuk=1102675022498&iv=0&vl=1&htype=&randtype=&tkbind_id=0&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=en-d4952d084c10cda6539dd7aff082c825b6c1dc72b3deb8905cac7bce216cf8e61c581b355e391b6982daabea681f6c3922dd240f3db8cb1c305a5e1275657320&expires=8h&rt=pr&r=484713420&mlogid=966456087359513385&vbdid=-&fin=IMG_20260202_214105.jpg&err_ver=1.0&rtype=1&clienttype=70&dp-logid=966456087359513385&dp-callid=0.1.1&hps=1&tsl=0&csl=0&fsl=-1&csign=RgkF9jKzPXIEdFKlGXBeQlT3BQI%3D&so=0&ut=6&uter=4&serv=0&uc=4010811801&ti=fb6dd0596e887f34a7a87e6b75e282f2c32e3798d03f8ed7a6c2ad6eeb587c84&hflag=30&from_type=1&adg=n&reqlabel=16051585_d_bed36cfb3557fa26285bfe5d7f2c7d01_-1_062486fedb7471d443eb374b2bf11e9f&bid=themisyike&fpath=_pcs_.appdata%2Fyoua%2Falbum&by=themis" },
+            { title: "沙漠星空", date: "2025-11-30", url: "https://bdbl-cm01.baidupcs.com/file/ac0ce2d8dra17a259c688c251ace583c?bkt=en-cf7b18a7c51d90781c74927428ff5c5ea469e9706e397eb62905bd7c8cbba3736a9dbe530f5ccb6c&fid=1102675022498-16051585-745903654034227&time=1770797163&sign=FDTAXUbGERQlBHSKfWqij-DCb740ccc5511e5e8fedcff06b081203-7Tie%2BTHeyE5%2Bo%2B3Zq0%2FmU815gh0%3D&to=401&size=18362186&sta_dx=18362186&sta_cs=0&sta_ft=mp4&sta_ct=3&sta_mt=3&fm2=MH%2CBaoding%2CAnywhere%2C%2C北京%2Ccmnet&ctime=1770117177&mtime=1770117177&dt3=0&resv0=-1&resv1=0&resv2=rlim&resv3=5&resv4=18362186&vuk=1102675022498&iv=0&vl=1&htype=&randtype=&tkbind_id=0&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=en-af2e7c34c77d122a5583b24065cc90d7cfd22917cc886924d137e410d184180ed3cfd2c485f0cdb0&expires=8h&rt=pr&r=606227747&mlogid=966465132090230838&vbdid=-&fin=VID_20260202_214055.mp4&err_ver=1.0&rtype=1&clienttype=70&dp-logid=966465132090230838&dp-callid=0.1.1&hps=1&tsl=0&csl=0&fsl=-1&csign=RgkF9jKzPXIEdFKlGXBeQlT3BQI%3D&so=0&ut=6&uter=4&serv=1&uc=4010811801&ti=6784091c0acd7d47614ef53c557db22f523c1ee9725f1b93305a5e1275657320&hflag=30&from_type=1&adg=n&reqlabel=16051585_d_bed36cfb3557fa26285bfe5d7f2c7d01_-1_062486fedb7471d443eb374b2bf11e9f&bid=themisyike&fpath=_pcs_.appdata%2Fyoua%2Falbum&by=themis" },
+            { title: "古镇风光", date: "2026-01-18", url: "https://bddwd-cm01.baidupcs.com/file/ac0ce2d8dra17a259c688c251ace583c?bkt=en-cf7b18a7c51d90781c74927428ff5c5ea469e9706e397eb62905bd7c8cbba3736a9dbe530f5ccb6c&fid=1102675022498-16051585-745903654034227&time=1770797199&sign=FDTAXUbGERQlBHSKfWqij-DCb740ccc5511e5e8fedcff06b081203-fJrbtvLLgNDOr0D9yJet32iK%2B1c%3D&to=445&size=18362186&sta_dx=18362186&sta_cs=0&sta_ft=mp4&sta_ct=3&sta_mt=3&fm2=MH%2CBaoding%2CAnywhere%2C%2C北京%2Ccmnet&ctime=1770117177&mtime=1770117177&dt3=0&resv0=-1&resv1=0&resv2=rlim&resv3=5&resv4=18362186&vuk=1102675022498&iv=0&vl=1&htype=&randtype=&tkbind_id=0&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=en-af2e7c34c77d122a5583b24065cc90d7cfd22917cc886924d137e410d184180ed3cfd2c485f0cdb0&expires=8h&rt=pr&r=624841736&mlogid=966474947188745938&vbdid=-&fin=VID_20260202_214055.mp4&err_ver=1.0&rtype=1&clienttype=70&dp-logid=966474947188745938&dp-callid=0.1.1&hps=1&tsl=0&csl=0&fsl=-1&csign=RgkF9jKzPXIEdFKlGXBeQlT3BQI%3D&so=0&ut=6&uter=4&serv=1&uc=4010811801&ti=94b3c8d7853df21f44de6ed2edca103356253f17b0c36743305a5e1275657320&hflag=30&from_type=1&adg=n&reqlabel=16051585_d_bed36cfb3557fa26285bfe5d7f2c7d01_-1_062486fedb7471d443eb374b2bf11e9f&bid=themisyike&fpath=_pcs_.appdata%2Fyoua%2Falbum&by=themis" }
+        ];
+        
+        // 生成照片卡片
+        const photoGrid = document.querySelector('.photo-grid');
+        
+        photos.forEach(photo => {
+            const card = document.createElement('div');
+            card.className = 'photo-card';
+            
+            card.innerHTML = `
+                <img src="${photo.url}" alt="${photo.title}" class="photo-img">
+                <div class="photo-info">
+                    <!--<h3 class="photo-title">${photo.title}</h3>
+                    <p class="photo-date">${photo.date}</p>-->
+                </div>
+            `;
+            
+            photoGrid.appendChild(card);
+        });
+    </script>
+</body>
+</html>
